@@ -1,0 +1,37 @@
+@import "vars";
+@import "mixins";
+@host {
+  * {
+    display: block;
+    position: relative;
+    width: 120px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: inset 0px 0px 1px 0 rgba(0,0,0,0.1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-transition: border 0.130s ease-out;
+    transition: border 0.130s ease-out;
+    cursor: pointer;
+  }
+}
+.toggle { background: none; background-size: 100% 46px; height: 36px; display: flex; }
+.off-label, .on-label { 
+  display: block; flex: 1;
+  height: 36px;
+  line-height: 36px;
+  background: $blue; border-style: solid; 
+  color: $lt-blue;
+  text-align: center;
+}
+
+.on-label { 
+  .toggle & { @include vendor(border-radius, 0 3px 3px 0); @include vendor(box-shadow, 0 1px 5px rgba(0,0,0, .2)); border-width: 1px 1px 1px 2px; border-color: $blue $blue $blue transparentize($dk-blue, .5); }
+  .toggle.on & { @include vendor(border-radius, 0 3px 3px 0); @include vendor(box-shadow, 1px 1px 5px rgba(0,0,0, .2) inset);  }
+}
+.off-label { 
+  .toggle.on & { background: $blue; @include vendor(border-radius, 3px 0 0 3px); @include vendor(box-shadow, -1px 1px 5px rgba(0,0,0, .2)); border-width: 1px 2px 1px 1px; border-color: $blue transparentize($dk-blue, .5) $blue $blue; color: $lt-blue; }
+  .toggle & { @include vendor(border-radius, 3px 0 0 3px); @include vendor(box-shadow, 0 1px 5px rgba(0,0,0, .2) inset); }
+}
+.toggle.on .on-label, .toggle .off-label { background: #FFF; border-width: 1px; border-style: solid; border-color: #ccc; color: $orange; font-family: $ars-bold; }

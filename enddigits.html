@@ -1,0 +1,82 @@
+<polymer-element name="end-digits" attributes="value" on-tap="selectEnddigit" on-trackstart="trackStart" on-track="track" on-trackend="trackEnd" on-flick="flick">
+  <template>
+    <div class="end-numbers selected-x contain">
+        <template name="x-bar" bind>
+          <div class="text-input"></div>
+        </template>
+        <template name="x-toggle" bind>
+          <button class="selection"></button>
+        </template>
+        <template repeat="{{enddigits}}" name="end-number">
+          <button class="end-number {{class}}">{{value}}</button>
+        </template>
+      </div>
+      <style scoped>    
+        .end-numbers { height: 55px; margin: 30px; position: relative; width: 50%; }
+        .text-input { height: 36px; margin: 0; padding: 0 10px; border: 1px solid #fff; border-radius: 3px; text-align: left; background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#fff)); position: absolute; z-index: 1; left: 0; top: 0; width: 100%; opacity: .5; box-shadow: 0px -1px 5px rgba(0,0,0, .2) inset; }
+        .end-number { color: #ff6600; text-shadow: 0 1px 0 #fff; border: none; background: none; font-size: 34px; width: 8.8%; line-height: 34px; float: left; padding: 0; text-align: center; position: relative; z-index: 2; }
+          .milli { font-size: 13px; width: 12%; line-height: 1; height: 36px; }
+        .selection {
+          position: absolute;
+          top: -10px;
+          width: 45px;
+          height: 55px;
+          width: 12%;
+          background: #ff6600;
+          border-radius: 3px;
+          border: 1px solid #ff6600;
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .3);
+          z-index: -1;
+        }
+        .selection.animate { -webkit-transition: all .1s ease-out; transition: all .1s ease-out; }
+      </style>
+    </div>
+  </template>
+  <script>
+    Polymer('end-digits', {
+      enddigits: [
+        {value: 'Maakt niet uit', class: 'milli'}, 
+        {value: 1},
+        {value: 2},
+        {value: 3},
+        {value: 4},
+        {value: 5},
+        {value: 6},
+        {value: 7},
+        {value: 8},
+        {value: 9}
+      ],
+      value: false,
+      created: function() {
+        this.setAttribute('touch-action', 'none');
+      },
+      selectEnddigit: function() {
+        console.log(this.$.end-number.value);
+      },
+      valueChanged: function() {
+        this.classList.add('selected-' + this.value);
+        this.$.toggle.classList.add('selected-' + this.value);
+      },
+      trackStart: function(e) {
+        e.preventTap();
+        this.w = this.$.toggle.offsetWidth - this.clientWidth;
+        this.$.toggle.classList.add('dragging');
+      },
+      track: function(e) {
+        this.x = Math.max(-this.w, Math.min(0, this.value ? e.dx : e.dx - this.w));
+        this.$.toggle.style.left = this.x + 'px';
+      },
+      trackEnd: function() {
+        this.$.toggle.style.left = null;
+        this.$.toggle.classList.remove('dragging');
+        this.value = Math.abs(this.x) < this.w / 2;
+        // make valueChanged calls immediately
+        dirtyCheck();
+      },
+      flick: function(e) {
+        this.value = e.xVelocity > 0;
+        dirtyCheck();
+      }
+    });
+  </script>
+</polymer-element>

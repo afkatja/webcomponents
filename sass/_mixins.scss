@@ -1,0 +1,294 @@
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+/**
+ * Create a fully formed type style (sizing and vertical rhythm) by passing in a
+ * single value, e.g.:
+ *
+   `@include font-size(10px);`
+ */
+
+@mixin font-size($font-size){
+  font-size:$font-size;
+  font-size: ($font-size / $base-font-size)*1rem;
+}
+
+@mixin line-height($font-size, $line-height){
+  line-height: ($line-height / $font-size)*1rem;
+}
+
+@mixin sticky-footer($footer-height, $root-selector: unquote("#root"), $root-footer-selector: unquote("#root_footer"), $footer-selector: unquote("#footer")) {
+  html, body { height: 100%; width: 100%; }
+  #wrap, #page-wrap { height: 100%; }
+  #{$root-selector} {
+    clear: both;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    padding-bottom: $footer-height;
+    margin-bottom: -$footer-height;
+    @if ($root-footer-selector != "") {
+      #{$root-footer-selector} { height: $footer-height; } }
+    }
+  #{$footer-selector} {
+    clear: both;
+    position: relative;
+    //min-height: $footer-height;
+  }
+}
+
+@mixin hbox { @include flexbox(horizontal); }
+@mixin vbox { @include flexbox(vertical); }
+
+@mixin flexbox($direction){
+  @include vendor-value(display, box);   /*old syntax*/
+  @include vendor-value(display, flex);   /*new syntax*/
+    /*support for new syntax*/
+  @if($direction == 'vertical') { @include vendor(flex-flow, column wrap); }
+  @else if($direction == 'horizontal') { @include vendor(flex-flow, row wrap); }
+}
+
+@mixin abs-center-h($width) {
+  width: $width; left: 50%; margin-left: -1 * round($width/2);
+}
+@mixin abs-center-v($height) {
+  height: $height; top: 50%; margin-top: -1 * round($height/2);
+}
+
+@mixin mass-extend($classes...) {
+	@each $class in $classes {
+		@extend .#{$class};
+	}
+}
+
+/**
+ * Create vendor-prefixed CSS in one go, e.g.
+ *
+   `@include vendor(border-radius, 4px);`
+ *
+ */
+@mixin vendor($property, $value...){
+    -webkit-#{$property}:$value;
+       -moz-#{$property}:$value;
+        -ms-#{$property}:$value;
+            #{$property}:$value;
+}
+
+@mixin vendor-value($property, $value){
+  #{$property}:-webkit-#{$value};
+     #{$property}:-moz-#{$value};
+      #{$property}:-ms-#{$value};
+          #{$property}:#{$value};
+}
+
+@mixin var-round-border($topleft, $topright, $bottomright, $bottomleft) {
+	-webkit-border-top-left-radius: $topleft;
+	-webkit-border-top-right-radius: $topright;
+	-webkit-border-bottom-right-radius: $bottomright;
+	-webkit-border-bottom-left-radius: $bottomleft;
+	-moz-border-radius-topleft: $topleft;
+	-moz-border-radius-topright: $topright;
+	-moz-border-radius-bottomright: $bottomright;
+	-moz-border-radius-bottomleft: $bottomleft;
+	border-top-left-radius: $topleft;
+	border-top-right-radius: $topright;
+	border-bottom-right-radius: $bottomright;
+	border-bottom-left-radius: $bottomleft;
+}
+
+@mixin vertical-gradient($fromColor, $toColor, $fromPosition: 0, $toPosition: 100%){
+  background-color: $fromColor; /*Old browsers*/
+  background: -moz-linear-gradient(top, $fromColor $fromPosition $toColor $toPosition); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop($fromPosition, $fromColor), color-stop($toPosition, $toColor)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition); /* IE10+ */
+  background: linear-gradient(to bottom, $fromColor $fromPosition, $toColor $toPosition); /* W3C */
+  //filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#{$fromColor}, EndColorStr=#{$toColor}, GradientType=0); /*old IE's - vertical*/
+}
+
+@mixin horizontal-gradient($fromColor, $toColor, $fromPosition: 0, $toPosition: 100%){
+  background-color: $toColor; /*Old browsers*/
+  background: -moz-linear-gradient(left, $fromColor $fromPosition, $toColor $toPosition); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop($fromPosition, $fromColor), color-stop($toPosition, $toColor)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, $fromColor $fromPosition, $toColor $toPosition); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, $fromColor $fromPosition, $toColor $toPosition); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, $fromColor $fromPosition, $toColor $toPosition); /* IE10+ */
+  background: linear-gradient(to right, $fromColor $fromPosition, $toColor $toPosition); /* W3C */
+  //filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#{$fromColor}, EndColorStr=#{$toColor}, GradientType=1); /*old IE's - horizontal*/
+}
+
+@mixin vertical-gradient-and-image($img, $fromColor, $toColor, $fromPosition: 0, $toPosition: 100%){
+  background-color: $toColor; /*Old browsers*/
+  background-image: $img;
+  background: -moz-linear-gradient(top, $fromColor $fromPosition $toColor $toPosition), $img; /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop($fromPosition, $fromColor), color-stop($toPosition, $toColor)), $img; /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition), $img; /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition), $img; /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $fromColor $fromPosition, $toColor $toPosition), $img; /* IE10+ */
+  background: linear-gradient(to bottom, $fromColor $fromPosition, $toColor $toPosition), $img; /* W3C */
+}
+
+@mixin horizontal-gradient-and-image($img, $fromColor, $toColor){
+  background-color: $toColor; /*Old browsers*/
+  background-image: $img;
+  background: $img, -moz-linear-gradient(left, $fromColor 0%, $toColor 100%); /* FF3.6+ */
+  background: $img, -webkit-gradient(linear, left top, right top, color-stop(0%, $fromColor), color-stop(100%, $toColor)); /* Chrome,Safari4+ */
+  background: $img, -webkit-linear-gradient(left, $fromColor 0%, $toColor 100%); /* Chrome10+,Safari5.1+ */
+  background: $img, -o-linear-gradient(left, $fromColor 0%, $toColor 100%); /* Opera 11.10+ */
+  background: $img, -ms-linear-gradient(left, $fromColor 0%, $toColor 100%); /* IE10+ */
+  background: $img, linear-gradient(to right, $fromColor 0%, $toColor 100%); /* W3C */
+}
+
+@mixin radial-gradient($fromColor, $toColor, $fromPosition: 0, $toPosition: 100%, $start: center center){ //'center center' instead of '50% 50%' -> IE8
+    background: #f0f9ff; /* Old browsers */
+    background: -moz-radial-gradient($start, ellipse cover, $fromColor $fromPosition, $toColor $toPosition); /* FF3.6+ */
+    background: -webkit-gradient(radial, $start $start, 0px, $start $start, 100%, color-stop($fromPosition, $fromColor), color-stop($toPosition, $toColor)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient($start, ellipse cover, $fromColor $fromPosition, $toColor $toPosition); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient($start, ellipse cover, $fromColor $fromPosition, $toColor $toPosition); /* Opera 12+ */
+    background: -ms-radial-gradient($start, ellipse cover, $fromColor $fromPosition, $toColor $toPosition); /* IE10+ */
+    background: radial-gradient(ellipse at $start, $fromColor $fromPosition, $toColor $toPosition); /* W3C */
+    //filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#{$fromColor}, EndColorStr=#{$toColor}, GradientType=0); /*old IE's - vertical*/
+}
+
+@mixin diagonal-gradient($deg, $fromColor, $toColor, $middleColor: transparent, $fromPosition: 0, $toPosition: 100%){ 
+  background: $toColor; /* Old browsers */
+  background: -moz-linear-gradient($deg,  $fromColor $fromPosition, $middleColor 50%, $toColor $toPosition); /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop($fromPosition, $fromColor), color-stop($middleColor 50%), color-stop($toPosition, $toColor)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient($deg, $fromColor $fromPosition, $middleColor 50%, $toColor $toPosition); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient($deg, $fromColor $fromPosition, $middleColor 50%, $toColor $toPosition); /* Opera 11.10+ */
+  background: -ms-linear-gradient($deg, $fromColor $fromPosition, $middleColor 50%, $toColor $toPosition); /* IE10+ */
+  background: linear-gradient($deg, $fromColor $fromPosition, $middleColor 50%, $toColor $toPosition); /* W3C */
+}
+
+/**
+ * Create CSS keyframe animations for all vendors in one go, e.g.:
+ *
+   .foo{
+       @include vendor(animation, shrink 3s);
+   }
+
+   @include keyframe(shrink){
+       from{
+           font-size:5em;
+       }
+   }
+ *
+ * Courtesy of @integralist: twitter.com/integralist/status/260484115315437569
+ */
+@mixin keyframe ($animation-name){
+    @-webkit-keyframes $animation-name{
+        @content;
+    }
+
+    @-moz-keyframes $animation-name{
+        @content;
+    }
+
+    @-ms-keyframes $animation-name{
+        @content;
+    }
+
+    @-o-keyframes $animation-name{
+        @content;
+    }
+
+    @keyframes $animation-name{
+        @content;
+    }
+}
+
+
+/**
+ * Force overly long spans of text to truncate, e.g.:
+ *
+   `@include truncate(100%);`
+ *
+ * Where `$truncation-boundary` is a united measurement.
+ */
+@mixin truncate($truncation-boundary){
+    max-width:$truncation-boundary;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+@mixin truncate-mask($content: '') { position: relative;
+  &:after { content: $content; position: absolute; right: 20px; top: 0; width: 40px; height: 100%; @include horizontal-gradient(transparentize(#fff, 1), #fbfbfb); }
+}
+
+@mixin debugTrans() {
+  @include vendor(transform, translate3d(0, 0, 0));
+}
+
+@mixin opacity($value) {  
+  opacity: $value;
+  filter: alpha(opacity = $value * 100);
+}
+
+// Arrows
+
+@mixin arrow-base() {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -6px;
+  // @include abs-center-v(10px);
+  border-width: 2px 0 0 2px;
+  border-style: solid;
+  @include vendor(border-radius, 2px 0 0 0);
+}
+@mixin arrow-down() {
+  right: 10px;
+  // margin-top: -8px;
+  @include vendor(transform, rotate(-135deg));
+}
+@mixin arrow-down-sideways() {
+  @include arrow-down;
+  right: 20px;
+}
+@mixin arrow-up() {
+  right: 10px;
+  margin-top: -2px;
+  @include vendor(transform, rotate(45deg));
+}
+@mixin arrow-right() {
+  right: 20px;
+  @include vendor(transform, rotate(135deg));
+}
+@mixin arrow-left() {
+  left: 1px;
+  @include vendor(transform, rotate(-45deg));
+}
+
+/**
+ * Media queries
+ */
+
+@mixin media-query($media-query){
+  @if $media-query == tabletl-and-up{
+      @media only screen and (min-width: $tabletp + 1) { @content; }
+  }
+  @if $media-query == tablet-and-up{
+      @media only screen and (min-width: $mobilel + 1) { @content; }
+  }
+  @if $media-query == tabletl{
+      @media only screen and (max-width: $tabletl) { @content; }
+  }
+  @if $media-query == tabletp{
+      @media only screen and (max-width: $tabletp) { @content; }
+  }
+  @if $media-query == mobilel{
+    @media only screen and (max-width: $mobilel) { @content; }
+  }
+  @if $media-query == mobilep{
+    @media only screen and (max-width: $mobilep) { @content; }
+  }
+  @if $media-query == retina {
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-device-pixel-ratio: 1.5) { @content; }
+  }
+}
+
+@mixin custom-mq($mq) {
+	@media only screen and (max-width: $mq) { @content; }
+}

@@ -1,0 +1,8 @@
+@import 'vars';
+@import "mixins";
+
+.decorated {
+  decorator: url(#decor1);
+  color: green;
+}
+

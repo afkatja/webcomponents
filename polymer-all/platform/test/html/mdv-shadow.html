@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MDV + ShadowDOM Polyfill Integration Tests</title>
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
+  <script src="../../../ShadowDOM/shadowdom.js"></script>
+  <script>
+    var parserHasNativeTemplate = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<table><template>';
+      return div.firstChild.firstChild &&
+             div.firstChild.firstChild.tagName == 'TEMPLATE';
+    }();
+
+    var forceCollectObservers = true;
+  </script>
+  <script src="../../node_modules/mocha/mocha.js"></script>
+  <script src="../../node_modules/chai/chai.js"></script>
+  <script src="../../tools/test/htmltest.js"></script>
+  <script src="../../../observe-js/src/observe.js"></script>
+  <script src="../../../NodeBind/src/NodeBind.js"></script>
+  <script src="../../../polymer-expressions/src/polymer-expressions.js"></script>
+  <script src="../../../polymer-expressions/third_party/esprima/esprima.js"></script>
+  <script src="../../../TemplateInstances/src/TemplateInstances.js"></script>
+</head>
+<body>
+  <script>
+
+    mocha.setup({
+      ignoreLeaks: true,
+      ui: 'tdd'
+    });
+
+    var assert = chai.assert;
+
+  </script>
+  <script src="../../../polymer-expressions/tests/tests.js"></script>
+  <script src="../../../TemplateInstances/tests/tests.js"></script>
+  <div id="mocha"></div>
+  <script>
+    var unwrap = ShadowDOMPolyfill.unwrap;
+    // mocha stomps window.onerror, save for failure case
+    var htmlsuite_fail = window.onerror;
+    var runner = mocha.run();
+    runner.on('fail', function(test, err) {
+      htmlsuite_fail(err.toString());
+    });
+    runner.on('end', function() {
+      runner.failures || done();
+    });
+  </script>
+</body>
+</html>

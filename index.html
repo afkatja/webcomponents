@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom select with Polymer</title>
+  <script src="polymer/polymer.min.js"></script>
+  <script src="prefixfree.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/webcomponents.css" />
+  <link rel="import" href="select.html" />
+  <link rel="import" href="enddigits.html" />
+  <link rel="import" href="toggle-button.html" />
+  <style type="text/css">
+    * {  box-sizing: border-box; }
+    .rel { position: relative; } 
+    .abs { position: absolute; }
+    .contain:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
+  </style>
+</head>
+<body>
+  <custom-select></custom-select>
+  <end-digits></end-digits>
+  <toggle-button></toggle-button>
+</body>
+</html>

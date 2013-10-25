@@ -1,0 +1,117 @@
+@charset "UTF-8";
+/*------------------------------------*\
+    $VARS
+\*------------------------------------*/
+/**
+ * Set up project-specific variables here which are then used throughout your
+ * build. These variables are automatically picked up by inuit.css so you should
+ * never need to modify any framework code.
+ */
+/**
+ * Debug mode will visually highlight any potential markup/accessibility quirks
+ * in the browser. Set to `true` or `false`.
+ */
+/**
+ * Image path
+ */
+/**
+ * Do you want all elements to adopt `box-sizing:border-box;` as per
+ * paulirish.com/2012/box-sizing-border-box-ftw ?
+ */
+/**
+ * Would you like to use Adam Whitcroft’s Batch icon font, as per:
+ * adamwhitcroft.com/batch ?
+ */
+/**
+ * Base stuff
+ */
+/**
+ * How big would you like round corners to be by default?
+ */
+/**
+ * Responsiveness?
+ */
+/**
+ * Responsiveness for widescreen/high resolution desktop monitors and beyond?
+ * Note: $responsive parameter above must be enabled before enabling this.
+ */
+/**
+ * Responsive push and pull produce a LOT of code, only turn them on if you
+ * definitely need them.
+ */
+/**
+ * Tell inuit.css when breakpoints start.
+*/
+/* Staats breakpoints. */
+/* Inuit's weird breakpoints */
+/**
+ * Font-sizes (in pixels). Refer to relevant sections for their implementations.
+ */
+/**
+ * English quote marks?
+ */
+/**
+ * If you want English quotes then please do not edit these; they’re only here
+ * because Sass needs them.
+ */
+/**
+ * If you need non-English quotes, please alter the following values accordingly:
+ */
+/**
+ * Brand stuff
+ */
+/**
+ * Colors
+ */
+/**
+ * Gradients
+ */
+/**
+ * inuit.css will work these next ones out for you.
+ *
+ * Assign our `$base-line-height` to a new spacing var for more transparency.
+ */
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+/**
+ * Create a fully formed type style (sizing and vertical rhythm) by passing in a
+ * single value, e.g.:
+ *
+   `@include font-size(10px);`
+ */
+/**
+ * Create vendor-prefixed CSS in one go, e.g.
+ *
+   `@include vendor(border-radius, 4px);`
+ *
+ */
+/**
+ * Create CSS keyframe animations for all vendors in one go, e.g.:
+ *
+   .foo{
+       @include vendor(animation, shrink 3s);
+   }
+
+   @include keyframe(shrink){
+       from{
+           font-size:5em;
+       }
+   }
+ *
+ * Courtesy of @integralist: twitter.com/integralist/status/260484115315437569
+ */
+/**
+ * Force overly long spans of text to truncate, e.g.:
+ *
+   `@include truncate(100%);`
+ *
+ * Where `$truncation-boundary` is a united measurement.
+ */
+/**
+ * Media queries
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/katjahollaar\/Projects\/webcomponents\/sass\/webcomponents\.scss}line{font-family:\000034}}
+.decorated {
+  decorator: url(#decor1);
+  color: green; }

@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+/*------------------------------------*\
+    $VARS
+\*------------------------------------*/
+
+/**
+ * Set up project-specific variables here which are then used throughout your
+ * build. These variables are automatically picked up by inuit.css so you should
+ * never need to modify any framework code.
+ */
+
+/**
+ * Debug mode will visually highlight any potential markup/accessibility quirks
+ * in the browser. Set to `true` or `false`.
+ */
+
+$debug-mode:        false !default;
+
+/**
+ * Image path
+ */
+$image-path : "../images";
+
+/**
+ * Do you want all elements to adopt `box-sizing:border-box;` as per
+ * paulirish.com/2012/box-sizing-border-box-ftw ?
+ */
+$global-border-box: true !default;
+
+/**
+ * Would you like to use Adam Whitcroft’s Batch icon font, as per:
+ * adamwhitcroft.com/batch ?
+ */
+$batch:             false !default;
+
+/**
+ * Base stuff
+ */
+$base-page-width: 	960px;
+
+$base-font-size:    16px !default;
+$base-line-height:  22px !default;
+
+/**
+ * How big would you like round corners to be by default?
+ */
+$brand-round:        3px !default;
+
+
+/**
+ * Responsiveness?
+ */
+$responsive:        true !default;
+
+/**
+ * Responsiveness for widescreen/high resolution desktop monitors and beyond?
+ * Note: $responsive parameter above must be enabled before enabling this.
+ */
+$responsive-extra:  false !default;
+
+/**
+ * Responsive push and pull produce a LOT of code, only turn them on if you
+ * definitely need them.
+ */
+$responsive-push:   true !default;
+$responsive-pull:   true !default;
+
+/**
+ * Tell inuit.css when breakpoints start.
+*/
+
+/* Staats breakpoints. */
+$tabletl:       1023px  !default;
+$tabletp:       800px   !default;
+$mobilel:       740px   !default;
+$mobilep:       480px   !default;
+
+/* Inuit's weird breakpoints */
+$lap-start:         $mobilep + 1 !default;
+$desk-start:        $tabletl + 1 !default;
+$desk-wide-start: 	1200px       !default;
+
+
+// function for relative type
+@function relativeUnit($target, $context: $base-font-size) {
+   @if $target == 0 { @return 0 }
+   @return $target / $context;
+}
+
+/**
+ * Font-sizes (in pixels). Refer to relevant sections for their implementations.
+ */
+$giga-size:         120px !default; // TODO Check actual size
+$mega-size:         70px !default; // TODO Check actual size
+$mega-min-size:     60px !default; // TODO Check actual size
+$kilo-size:         50px !default;
+
+$alpha-size:        36px !default;
+$beta-size:         28px !default;
+$gamma-size:        22px !default;
+
+$delta-size:        16px !default;
+$delta-line-height: 22px !default;
+
+$epsilon-size:      15px !default;
+$zeta-size:         14px !default;
+
+$milli-size:        13px !default;
+$micro-size:        12px !default;
+$nano-size:         12px !default;
+
+
+// font face
+$arial: arial, sans-serif;
+$ars-lt: 'ars_maquettelight', arial, sans-serif;
+$ars-reg: 'ars_maquetteregular', arial, sans-serif;
+$ars-med: 'ars_maquette_mediumregular', arial, sans-serif;
+$ars-bold: 'ars_maquettebold', arial, sans-serif;
+$iconic: 'ModernPictogramsNormal';
+
+/**
+ * English quote marks?
+ */
+$english-quotes:    true!default;
+
+/**
+ * If you want English quotes then please do not edit these; they’re only here
+ * because Sass needs them.
+ */
+$open-quote:    null;
+$close-quote:   null;
+
+/**
+ * If you need non-English quotes, please alter the following values accordingly:
+ */
+@if $english-quotes != true {
+    $open-quote:    «;
+    $close-quote:   »;
+}
+
+/**
+ * Brand stuff
+ */
+$brand-color:       #ff6600 !default;
+$brand-face:        'ars_maquetteregular', sans-serif !default;
+
+/**
+ * Colors
+ */
+$orange-opaque: #ff6600;
+$dk-orange-opaque: #cf4f00;
+$lt-orange-opaque:#ff9600;
+$lt-orange-t-opaque:#ff9600;
+
+$orange:        transparentize($orange-opaque, .1);
+$dk-orange:     transparentize($dk-orange-opaque, .1);
+$lt-orange:     transparentize($lt-orange-opaque, .1);
+$lt-orange-t:   transparentize($lt-orange-t-opaque, .7);
+
+$blue:          #2675af;
+$dk-blue:       #002d6b;
+$lt-blue:       #2c87ca;
+$grey:          #999999;
+$med-grey:      #dddddd;
+$lt-grey:       #efefef;
+$grey-blue:     #4e606f; // default text color
+$dk-grey-blue:  #324158;
+$lt-grey-blue:  #c9dceB;
+$dk-transparent:   transparentize(#000000, .7);
+
+/**
+ * Gradients
+ */
+
+// TODO Probably doesn't need to be a mixin
+@mixin orange-v-gradient() { //nav
+  @include vertical-gradient($orange, #ed6000, 75%, 100%);
+}
+
+/**
+ * inuit.css will work these next ones out for you.
+ *
+ * Assign our `$base-line-height` to a new spacing var for more transparency.
+ */
+$base-spacing-unit: 20px !default;
+$half-spacing-unit: $base-spacing-unit / 2 !default;
+$line-height-ratio: $base-line-height / $base-font-size;
+
+@mixin unit($unit) {
+	$base-spacing-unit: $unit !default;
+	$half-spacing-unit: $base-spacing-unit / 2 !default;
+	$line-height-ratio: $base-line-height / $base-font-size;
+}
